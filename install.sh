@@ -1,4 +1,2 @@
 #!/bin/bash
-
-ln -s $(pwd)/rsg /usr/local/bin
-rsg
+ln -s $(pwd)/shellgen /usr/local/bin

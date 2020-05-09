@@ -4,21 +4,23 @@ from sys import argv, exit as exit_code
 from os import system, path
 
 def GREEN(text):
-	return("\033[32m%s\033[0m" % str(text))
+    return("\033[32m%s\033[0m" % str(text))
 
 def main():
-	if len(argv) < 3:
-		print('Syntax Error:\n%s ip port\nExample: %s 192.168.10.1 4444' % (argv[0], argv[0]))
-		exit_code(-1)
-
-	ipaddr, port = argv[1], argv[2]
-	shells = path.join(path.dirname(path.realpath(__file__)), 'shells.txt')
-	for shell in open(shells):
-		desc, cmd = shell.split('|', 1)
-		cmd = cmd.replace("[IPADDR]", ipaddr)
-		cmd = cmd.replace("[PORT]", port)
-		print(GREEN(desc))
-		print(cmd)
+    if len(argv) < 3:
+        print('Usage: %s [attacker ip] [local port to bind on]' % (argv[0]))
+        exit_code(-1)
+    ipaddr, port = argv[1], argv[2]
+    shells = path.join(path.dirname(path.realpath(__file__)), 'shells.txt')
+    for shell in open(shells):
+        try:
+            desc, cmd = shell.split('|', 1)
+            cmd = cmd.replace("[IPADDR]", ipaddr)
+            cmd = cmd.replace("[PORT]", port)
+            print(GREEN(desc))
+            print(cmd)
+        except:
+            None
 
 if __name__ == "__main__":
-	main()
+    main()
